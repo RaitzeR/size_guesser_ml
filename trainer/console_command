@@ -1,0 +1,20 @@
+export JOB_NAME="body_eleventh_test"
+export BUCKET_NAME=body-size-ml-data
+export CLOUD_CONFIG=trainer/cloudml-gpu.yaml
+export JOB_DIR=gs://$BUCKET_NAME/jobs/$JOB_NAME
+export MODULE=trainer.train
+export PACKAGE_PATH=./trainer
+export REGION=europe-west1
+export RUNTIME=1.2
+export TRAIN_FILE=training_data_small/even_images
+
+gcloud ml-engine jobs submit training $JOB_NAME \
+--job-dir $JOB_DIR \
+--runtime-version $RUNTIME \
+--module-name $MODULE \
+--package-path $PACKAGE_PATH \
+--region $REGION \
+--config=$CLOUD_CONFIG \
+-- \
+--data-directory $TRAIN_FILE \
+--model-file-prefix $JOB_NAME \
